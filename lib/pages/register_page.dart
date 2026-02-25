@@ -20,6 +20,8 @@ class _RegisterPageState extends State<RegisterPage> {
   final TextEditingController confirmPasswordController =
       TextEditingController();
 
+  final TextEditingController usernameController = TextEditingController();
+
   Future<void> register() async {
     final authService = AuthService();
     // loading
@@ -43,6 +45,7 @@ class _RegisterPageState extends State<RegisterPage> {
       await authService.signUpWithEmailAndPassword(
         emailController.text,
         passwordController.text,
+        usernameController.text,
       );
     } catch (e) {
       if (mounted) {
@@ -72,93 +75,102 @@ class _RegisterPageState extends State<RegisterPage> {
               mainAxisAlignment: MainAxisAlignment.center,
               mainAxisSize: MainAxisSize.min,
               children: [
-              // logo
-              Icon(
-                Icons.person,
-                size: 80,
-                color: Theme.of(context).colorScheme.inversePrimary,
-              ),
+                // logo
+                Icon(
+                  Icons.person,
+                  size: 80,
+                  color: Theme.of(context).colorScheme.inversePrimary,
+                ),
 
-              SizedBox(height: 25),
+                SizedBox(height: 25),
 
-              // app name
-              Text('B U Z Z L Y', style: TextStyle(fontSize: 20)),
+                // app name
+                Text('B U Z Z L Y', style: TextStyle(fontSize: 20)),
 
-              SizedBox(height: 25),
+                SizedBox(height: 25),
 
-              // email input
-              MyTextField(
-                hintText: 'Email',
-                isPassword: false,
-                controller: emailController,
-              ),
+                // username input
+                MyTextField(
+                  hintText: 'Username',
+                  isPassword: false,
+                  controller: usernameController,
+                ),
 
-              SizedBox(height: 10),
+                SizedBox(height: 10),
 
-              // password input
-              MyTextField(
-                hintText: 'Password',
-                isPassword: true,
-                controller: passwordController,
-              ),
+                // email input
+                MyTextField(
+                  hintText: 'Email',
+                  isPassword: false,
+                  controller: emailController,
+                ),
 
-              SizedBox(height: 10),
+                SizedBox(height: 10),
 
-              // confirm password input
-              MyTextField(
-                hintText: 'Confirm Password',
-                isPassword: true,
-                controller: confirmPasswordController,
-              ),
+                // password input
+                MyTextField(
+                  hintText: 'Password',
+                  isPassword: true,
+                  controller: passwordController,
+                ),
 
-              SizedBox(height: 25),
+                SizedBox(height: 10),
 
-              // forgot password
-              Row(
-                mainAxisAlignment: MainAxisAlignment.end,
-                children: [
-                  Text(
-                    "Forgot password?",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                    ),
-                  ),
-                ],
-              ),
+                // confirm password input
+                MyTextField(
+                  hintText: 'Confirm Password',
+                  isPassword: true,
+                  controller: confirmPasswordController,
+                ),
 
-              SizedBox(height: 25),
+                SizedBox(height: 25),
 
-              // register button
-              MyButton(text: 'Register', onTap: register),
-
-              SizedBox(height: 25),
-
-              // already have an account? login
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    "Already have an account? ",
-                    style: TextStyle(
-                      color: Theme.of(context).colorScheme.inversePrimary,
-                    ),
-                  ),
-                  GestureDetector(
-                    onTap: widget.onTap,
-                    child: Text(
-                      "Login Here",
+                // forgot password
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      "Forgot password?",
                       style: TextStyle(
-                        fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.inversePrimary,
                       ),
                     ),
-                  ),
-                ],
-              ),
-            ],
+                  ],
+                ),
+
+                SizedBox(height: 25),
+
+                // register button
+                MyButton(text: 'Register', onTap: register),
+
+                SizedBox(height: 25),
+
+                // already have an account? login
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Already have an account? ",
+                      style: TextStyle(
+                        color: Theme.of(context).colorScheme.inversePrimary,
+                      ),
+                    ),
+                    GestureDetector(
+                      onTap: widget.onTap,
+                      child: Text(
+                        "Login Here",
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color: Theme.of(context).colorScheme.inversePrimary,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
           ),
         ),
-      ),
       ),
     );
   }
