@@ -1,3 +1,4 @@
+import 'package:buzzly/components/my_drawer.dart';
 import 'package:flutter/material.dart';
 
 class UsersPage extends StatelessWidget {
@@ -5,6 +6,10 @@ class UsersPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(body: Center(child: Text('Users Page')));
+    return Scaffold(
+      appBar: AppBar(title: const Text('Users')),
+      drawer: const MyDrawer(),
+      body: const Center(child: Text('Users Page')),
+    );
   }
 }

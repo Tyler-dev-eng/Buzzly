@@ -1,6 +1,7 @@
 import 'package:buzzly/components/my_drawer_header.dart';
 import 'package:buzzly/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -37,6 +38,7 @@ class MyDrawer extends StatelessWidget {
                   title: Text("H O M E"),
                   onTap: () {
                     Navigator.pop(context);
+                    context.go('/');
                   },
                 ),
               ),
@@ -52,6 +54,7 @@ class MyDrawer extends StatelessWidget {
                   title: Text("P R O F I L E"),
                   onTap: () {
                     Navigator.pop(context);
+                    context.go('/profile');
                   },
                 ),
               ),
@@ -67,6 +70,7 @@ class MyDrawer extends StatelessWidget {
                   title: Text("U S E R S"),
                   onTap: () {
                     Navigator.pop(context);
+                    context.go('/users');
                   },
                 ),
               ),
