@@ -1,15 +1,17 @@
 import 'package:buzzly/components/my_button.dart';
 import 'package:buzzly/components/my_textfield.dart';
-import 'package:buzzly/pages/register_page.dart';
+import 'package:buzzly/pages/login_page.dart';
 import 'package:flutter/material.dart';
 
-class LoginPage extends StatelessWidget {
+class RegisterPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  LoginPage({super.key});
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+  RegisterPage({super.key});
 
-  void login() {
-    debugPrint('Login button pressed');
+  void register() {
+    debugPrint('Register button pressed');
   }
 
   @override
@@ -54,6 +56,15 @@ class LoginPage extends StatelessWidget {
 
               SizedBox(height: 10),
 
+              // confirm password input
+              MyTextField(
+                hintText: 'Confirm Password',
+                isPassword: true,
+                controller: TextEditingController(),
+              ),
+
+              SizedBox(height: 25),
+
               // forgot password
               Row(
                 mainAxisAlignment: MainAxisAlignment.end,
@@ -69,17 +80,17 @@ class LoginPage extends StatelessWidget {
 
               SizedBox(height: 25),
 
-              // sign in button
-              MyButton(text: 'Login', onTap: login),
+              // register button
+              MyButton(text: 'Register', onTap: register),
 
               SizedBox(height: 25),
 
-              // dont have an account? sign up
+              // already have an account? login
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   Text(
-                    "Don't have an account? ",
+                    "Already have an account? ",
                     style: TextStyle(
                       color: Theme.of(context).colorScheme.inversePrimary,
                     ),
@@ -88,11 +99,11 @@ class LoginPage extends StatelessWidget {
                     onTap: () {
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => RegisterPage()),
+                        MaterialPageRoute(builder: (context) => LoginPage()),
                       );
                     },
                     child: Text(
-                      "Register Here",
+                      "Login Here",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         color: Theme.of(context).colorScheme.inversePrimary,
