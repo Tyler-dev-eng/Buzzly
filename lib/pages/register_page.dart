@@ -1,30 +1,77 @@
 import 'package:buzzly/components/my_button.dart';
 import 'package:buzzly/components/my_textfield.dart';
+import 'package:buzzly/services/auth/auth_service.dart';
 import 'package:flutter/material.dart';
 
-class RegisterPage extends StatelessWidget {
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
-  final TextEditingController confirmPasswordController =
-      TextEditingController();
+class RegisterPage extends StatefulWidget {
   final VoidCallback onTap;
 
-  RegisterPage({super.key, required this.onTap});
+  const RegisterPage({super.key, required this.onTap});
 
-  void register() {
-    debugPrint('Register button pressed');
+  @override
+  State<RegisterPage> createState() => _RegisterPageState();
+}
+
+class _RegisterPageState extends State<RegisterPage> {
+  final TextEditingController emailController = TextEditingController();
+
+  final TextEditingController passwordController = TextEditingController();
+
+  final TextEditingController confirmPasswordController =
+      TextEditingController();
+
+  Future<void> register() async {
+    final authService = AuthService();
+    // loading
+    showDialog(
+      context: context,
+      builder: (context) => Center(child: CircularProgressIndicator()),
+    );
+
+    // make sure passwords match
+    if (passwordController.text != confirmPasswordController.text) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(const SnackBar(content: Text('Passwords do not match')));
+      }
+      return;
+    }
+
+    // try creating user
+    try {
+      await authService.signUpWithEmailAndPassword(
+        emailController.text,
+        passwordController.text,
+      );
+    } catch (e) {
+      if (mounted) {
+        ScaffoldMessenger.of(
+          context,
+        ).showSnackBar(SnackBar(content: Text(e.toString())));
+      }
+    } finally {
+      if (mounted) {
+        Navigator.of(context).pop();
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Theme.of(context).colorScheme.surface,
-      body: Center(
-        child: Padding(
-          padding: const EdgeInsets.all(25),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: [
+      body: SingleChildScrollView(
+        child: ConstrainedBox(
+          constraints: BoxConstraints(
+            minHeight: MediaQuery.sizeOf(context).height,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(25),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisSize: MainAxisSize.min,
+              children: [
               // logo
               Icon(
                 Icons.person,
@@ -43,7 +90,7 @@ class RegisterPage extends StatelessWidget {
               MyTextField(
                 hintText: 'Email',
                 isPassword: false,
-                controller: TextEditingController(),
+                controller: emailController,
               ),
 
               SizedBox(height: 10),
@@ -52,7 +99,7 @@ class RegisterPage extends StatelessWidget {
               MyTextField(
                 hintText: 'Password',
                 isPassword: true,
-                controller: TextEditingController(),
+                controller: passwordController,
               ),
 
               SizedBox(height: 10),
@@ -61,7 +108,7 @@ class RegisterPage extends StatelessWidget {
               MyTextField(
                 hintText: 'Confirm Password',
                 isPassword: true,
-                controller: TextEditingController(),
+                controller: confirmPasswordController,
               ),
 
               SizedBox(height: 25),
@@ -97,7 +144,7 @@ class RegisterPage extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: onTap,
+                    onTap: widget.onTap,
                     child: Text(
                       "Login Here",
                       style: TextStyle(
@@ -111,6 +158,7 @@ class RegisterPage extends StatelessWidget {
             ],
           ),
         ),
+      ),
       ),
     );
   }
