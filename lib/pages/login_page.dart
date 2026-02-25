@@ -1,12 +1,13 @@
 import 'package:buzzly/components/my_button.dart';
 import 'package:buzzly/components/my_textfield.dart';
-import 'package:buzzly/pages/register_page.dart';
 import 'package:flutter/material.dart';
 
 class LoginPage extends StatelessWidget {
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
-  LoginPage({super.key});
+  final VoidCallback onTap;
+
+  LoginPage({super.key, required this.onTap});
 
   void login() {
     debugPrint('Login button pressed');
@@ -85,12 +86,7 @@ class LoginPage extends StatelessWidget {
                     ),
                   ),
                   GestureDetector(
-                    onTap: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => RegisterPage()),
-                      );
-                    },
+                    onTap: onTap,
                     child: Text(
                       "Register Here",
                       style: TextStyle(

@@ -1,5 +1,5 @@
-import 'package:buzzly/pages/login_page.dart';
 import 'package:buzzly/providers/theme_provider.dart';
+import 'package:buzzly/services/auth/login_or_register_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter/services.dart';
@@ -24,7 +24,7 @@ class MyApp extends ConsumerWidget {
     final theme = ref.watch(themeProvider);
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      home: LoginPage(),
+      home: LoginOrRegisterPage(),
       theme: theme,
     );
   }
