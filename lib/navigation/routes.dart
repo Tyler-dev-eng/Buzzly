@@ -27,21 +27,12 @@ final GoRouter router = GoRouter(
     return null;
   },
   routes: [
-    GoRoute(
-      path: '/',
-      builder: (context, state) => const HomePage(),
-    ),
+    GoRoute(path: '/', builder: (context, state) => const HomePage()),
     GoRoute(
       path: '/login',
       builder: (context, state) => const LoginOrRegisterPage(),
     ),
-    GoRoute(
-      path: '/profile',
-      builder: (context, state) => const ProfilePage(),
-    ),
-    GoRoute(
-      path: '/users',
-      builder: (context, state) => const UsersPage(),
-    ),
+    GoRoute(path: '/profile', builder: (context, state) => ProfilePage()),
+    GoRoute(path: '/users', builder: (context, state) => const UsersPage()),
   ],
 );

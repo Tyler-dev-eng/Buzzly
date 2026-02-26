@@ -9,6 +9,16 @@ class AuthService {
   // get current user
   User? get currentUser => _auth.currentUser;
 
+  // fetch user details from Firestore
+  Future<DocumentSnapshot<Map<String, dynamic>>> fetchUserDetails() async {
+    final uid = currentUser?.uid;
+    if (uid == null) {
+      throw Exception('No current user found');
+    }
+
+    return await _firestore.collection('users').doc(uid).get();
+  }
+
   // sign in with email and password
   Future<UserCredential> signInWithEmailAndPassword(
     String email,
